@@ -1,11 +1,16 @@
+DELETE FROM Employee
+WHERE EmployeeId = 1;
+
+DELETE FROM Employee;
+
+DROP TABLE ProductType;
+
 CREATE TABLE Customer (
 	Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	FirstName TEXT NOT NULL,
 	LastName TEXT NOT NULL,
-	DateCreated DATE NOT NULL, 
+	DateCreated DATETIME NOT NULL, 
 	Active BOOLEAN NOT NULL,
-	PaymentTypeId INTEGER NOT NULL,
-		FOREIGN KEY(PaymentTypeId) REFERENCES PaymentType(Id)
 );
 
 CREATE TABLE Product (
@@ -14,6 +19,7 @@ CREATE TABLE Product (
 	Title TEXT NOT NULL,
 	Description TEXT NOT NULL,
 	Quantity INTEGER NOT NULL,
+	DateCreated DATETIME NOT NULL,
 	CustomerId INTEGER NOT NULL,
 	ProductTypeId INTEGER NOT NULL,
 		FOREIGN KEY(CustomerId) REFERENCES Customer(Id)
@@ -28,12 +34,16 @@ CREATE TABLE ProductType (
 CREATE TABLE PaymentType (
 	Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	Type TEXT NOT NULL,
-	AccountNumber INTEGER NOT NULL
+	AccountNumber INTEGER NOT NULL,
+	DateCreated DATETIME NOT NULL,
+	CustomerId INTEGER NOT NULL,
+		FOREIGN KEY(CustomerId) REFERENCES Customer(Id)
 );
 
 CREATE TABLE ItemOrder (
 	CustomerId INTEGER NOT NULL,
 	PaymentTypeId INTEGER NOT NULL,
+	DateCreated DATETIME NOT NULL,
 		FOREIGN KEY(CustomerId) REFERENCES Customer(Id),
 		FOREIGN KEY(PaymentTypeId) REFERENCES PaymentType(Id)
 );
@@ -50,7 +60,7 @@ CREATE TABLE Employee (
 	Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	FirstName TEXT NOT NULL,
 	LastName TEXT NOT NULL,
-	Supervisor BOOL NOT NULL,
+	Supervisor BOOLEAN NOT NULL,
 	DepartmentId INTEGER NOT NULL,
 		FOREIGN KEY(DepartmentId) REFERENCES Department(Id)
 );
@@ -64,8 +74,8 @@ CREATE TABLE Department (
 CREATE TABLE TRAINING (
 	Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	TrainingName TEXT NOT NULL,
-	StartDate DATE NOT NULL,
-	EndDate DATE NOT NULL,
+	StartDate DATETIME NOT NULL,
+	EndDate DATETIME NOT NULL,
 	Capacity INTEGER NOT NULL
 );
 
@@ -79,31 +89,23 @@ CREATE TABLE EmployeeTraining (
 
 CREATE TABLE Computer (
 	Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	PurchaseDate DATE NOT NULL,
-	CommissionDate DATE NOT NULL,
-	DecommissionDate DATE NOT NULL,
-	Operational BOOL NOT NULL
+	PurchaseDate DATETIME NOT NULL,
+	DecommissionDate DATETIME NOT NULL,
+	Manufacturer TEXT NOT NULL,
+	Model TEXT NOT NULL
 );
 
 CREATE TABLE EmployeeComputer (
 	Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	AssignedDate DATETIME NOT NULL,
+	UnassignedDate DATETIME NOT NULL,
 	EmployeeId INTEGER NOT NULL,
 	ComputerId INTEGER NOT NULL,
 		FOREIGN KEY(EmployeeId) REFERENCES Employee(Id),
 		FOREIGN KEY(ComputerId) REFERENCES Customer(Id)
 );
 
-DELETE FROM Employee
-WHERE EmployeeId = 1;
+INSERT INTO Department (DepartmentName, Budget) VALUES ("Looney Tunes", 1000000);
 
-DELETE FROM Employee;
-
-DROP TABLE Department;
-
-CREATE TABLE (
-	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-		FOREIGN KEY() REFERENCES ()
-);
-
-INSERT INTO Employee (FirstName, LastName, Supervisor, DepartmentId) VALUES ("Donald", "Duck", True, 1); 
+INSERT INTO Employee (FirstName, LastName, Supervisor, DepartmentId) VALUES ("Donald", "Duck", 1, 1); 
 
