@@ -3,7 +3,11 @@ WHERE EmployeeId = 1;
 
 DELETE FROM Employee;
 
-DROP TABLE Training;
+DROP TABLE ItemOrder;
+
+
+-------------------------Customer--------------------------
+
 
 CREATE TABLE Customer (
 	Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -41,6 +45,7 @@ CREATE TABLE PaymentType (
 );
 
 CREATE TABLE ItemOrder (
+	Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	CustomerId INTEGER NOT NULL,
 	PaymentTypeId INTEGER NOT NULL,
 	DateCreated DATETIME NOT NULL,
@@ -55,6 +60,11 @@ CREATE TABLE ProductOrder (
 		FOREIGN KEY(ProductId) REFERENCES Product(Id),
 		FOREIGN KEY(ItemOrderId) REFERENCES ItemOrder(Id)
 );
+
+
+---------------------------Company--------------------------
+
+
 
 CREATE TABLE Employee (
 	Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -116,3 +126,15 @@ INSERT INTO EmployeeTraining (EmployeeId, TrainingId) VALUES (1, 1);
 INSERT INTO Computer (PurchaseDate, DecommissionDate, Manufacturer, Model) VALUES ("2017-12-25 12: 12: 12[.1212]", "", "HP", "EliteBook 8460p");
 
 INSERT INTO EmployeeComputer (AssignedDate, UnassignedDate, EmployeeId, ComputerId) VALUES ("2018-01-31 06: 06: 06[.666]", "", 1, 1);
+
+INSERT INTO Customer (FirstName, LastName, DateCreated, Active) VALUES ("Mickey", "Mouse", "2018-02-01 06: 06: 06[.666]", 1);
+
+INSERT INTO PaymentType (Type, AccountNumber, DateCreated, CustomerId) VALUES ("Credit Card", 1234, "2018-02-01 06: 06: 06[.666]", 1);
+
+INSERT INTO ItemOrder (CustomerId, PaymentTypeId, DateCreated) VALUES (1, 1, "2018-02-01 06: 06: 06[.666]");
+
+INSERT INTO ProductType (Type) VALUES ("Sweater"); 
+
+INSERT INTO Product (Price, Title, Description, Quantity, DateCreated, CustomerId, ProductTypeId) VALUES ("$6.66", "Halloween Bat Sweater", "Pure Egyptian Cotton", 3, "2018-02-02 06: 06: 06[.666]", 1, 1);
+
+INSERT INTO ProductOrder (ProductId, ItemOrderId) VALUES (1, 1);
