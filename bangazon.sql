@@ -3,14 +3,14 @@ WHERE EmployeeId = 1;
 
 DELETE FROM Employee;
 
-DROP TABLE ProductType;
+DROP TABLE Training;
 
 CREATE TABLE Customer (
 	Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	FirstName TEXT NOT NULL,
 	LastName TEXT NOT NULL,
 	DateCreated DATETIME NOT NULL, 
-	Active BOOLEAN NOT NULL,
+	Active BOOLEAN NOT NULL
 );
 
 CREATE TABLE Product (
@@ -22,7 +22,7 @@ CREATE TABLE Product (
 	DateCreated DATETIME NOT NULL,
 	CustomerId INTEGER NOT NULL,
 	ProductTypeId INTEGER NOT NULL,
-		FOREIGN KEY(CustomerId) REFERENCES Customer(Id)
+		FOREIGN KEY(CustomerId) REFERENCES Customer(Id),
 		FOREIGN KEY(ProductTypeId) REFERENCES ProductType(Id)
 );
 
@@ -71,7 +71,7 @@ CREATE TABLE Department (
 	Budget DOUBLE NOT NULL
 );
 
-CREATE TABLE TRAINING (
+CREATE TABLE Training (
 	Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	TrainingName TEXT NOT NULL,
 	StartDate DATETIME NOT NULL,
@@ -102,10 +102,17 @@ CREATE TABLE EmployeeComputer (
 	EmployeeId INTEGER NOT NULL,
 	ComputerId INTEGER NOT NULL,
 		FOREIGN KEY(EmployeeId) REFERENCES Employee(Id),
-		FOREIGN KEY(ComputerId) REFERENCES Customer(Id)
+		FOREIGN KEY(ComputerId) REFERENCES Computer(Id)
 );
 
 INSERT INTO Department (DepartmentName, Budget) VALUES ("Looney Tunes", 1000000);
 
 INSERT INTO Employee (FirstName, LastName, Supervisor, DepartmentId) VALUES ("Donald", "Duck", 1, 1); 
 
+INSERT INTO Training (TrainingName, StartDate, EndDate, Capacity) VALUES ("English", "2018-01-31 06: 06: 06[.666]", "2018-10-31 06: 06: 06[.666]", "666");
+
+INSERT INTO EmployeeTraining (EmployeeId, TrainingId) VALUES (1, 1);
+
+INSERT INTO Computer (PurchaseDate, DecommissionDate, Manufacturer, Model) VALUES ("2017-12-25 12: 12: 12[.1212]", "", "HP", "EliteBook 8460p");
+
+INSERT INTO EmployeeComputer (AssignedDate, UnassignedDate, EmployeeId, ComputerId) VALUES ("2018-01-31 06: 06: 06[.666]", "", 1, 1);
